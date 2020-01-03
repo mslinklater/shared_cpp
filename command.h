@@ -8,8 +8,7 @@
 #include <string>
 #include <map>
 #include <queue>
-#include "../interfaces/icommandprocessor.h"
-
+#include "icommandprocessor.h"
 
 class CommandCenter
 {
