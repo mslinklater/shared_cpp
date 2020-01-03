@@ -6,9 +6,9 @@
 #include <cassert>
 #include "windowmanager.h"
 #include "windowbase.h"
-#include "../log.h"
+#include "log.h"
 #include "../imgui/imgui.h"
-#include "../commands.h"
+//#include "../commands.h"
 #include "../config.h"
 
 

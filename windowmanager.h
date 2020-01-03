@@ -7,11 +7,12 @@
 
 #include <vector>
 #include <map>
-#include "../shared_cpp/command.h"
+#include "command.h"
 #include "../errorcodes.h"
-#include "../config.h"
+#include "../interfaces/iconfigserialisation.h"
 
 class WindowBase;
+class Config;
 
 class WindowManager : public ICommandProcessor, public IConfigSerialisation
 {

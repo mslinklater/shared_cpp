@@ -4,7 +4,7 @@
 // See file 'LICENSE' for license details
 
 #include "command.h"
-#include "../log.h"
+#include "log.h"
 
 CommandCenter* CommandCenter::pInstance = 0;
 
@@ -58,4 +58,21 @@ CommandCenter * CommandCenter::Instance()
 void CommandCenter::Subscribe(std::string commandName, ICommandProcessor* handler)
 {
 	dispatchMap[commandName].push_back(handler);
+}
+
+void SharedCommands::ToggleWindow(std::string windowName)
+{
+	LOGINFOF("Commands::ToggleWindow %s", windowName.c_str());
+	Command cmd;
+	cmd.name = kToggleWindowCommand;
+	cmd.payload = windowName;
+	CommandCenter::Instance()->Broadcast(cmd);
+}
+
+void SharedCommands::Quit(void)
+{
+	LOGINFO("Commands::Quit");
+	Command cmd;
+	cmd.name = kQuitCommand;
+	CommandCenter::Instance()->Broadcast(cmd);
 }
