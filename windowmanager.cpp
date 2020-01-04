@@ -7,9 +7,9 @@
 #include "windowmanager.h"
 #include "windowbase.h"
 #include "log.h"
-#include "../imgui/imgui.h"
-//#include "../commands.h"
-#include "../config.h"
+#include "../imgui/imgui.h"	// external dependency
+#include "command.h"
+#include "stateserialiser.h"
 
 
 WindowManager::WindowManager()
@@ -22,15 +22,15 @@ WindowManager::~WindowManager()
 {
 }
 
-void WindowManager::Init(Config* pConfig)
+void WindowManager::Init(StateSerialiser* pStateSerialiser)
 {
 	LOGINFO("WindowManager::Init");
 	
 	// Subscribe to all ToggleWindow commands
-	CommandCenter::Instance()->Subscribe("ToggleWindow", this);
-	CommandCenter::Instance()->Subscribe("Quit", this);
+	CommandCenter::Instance()->Subscribe(SharedCommands::kToggleWindowCommand, this);
+	CommandCenter::Instance()->Subscribe(SharedCommands::kQuitCommand, this);
 
-	pConfig->AddStateSerialiser(this);
+	pStateSerialiser->AddStateSerialiser(this);
 	initialised = true;
 }
 
@@ -55,11 +55,11 @@ void WindowManager::Draw()
 
 bool WindowManager::HandleCommand(const Command& command)
 {
-	if(command.name == Commands::kToggleWindowCommand)
+	if(command.name == SharedCommands::kToggleWindowCommand)
 	{
 		windowActive[command.payload] = !windowActive[command.payload];
 	}
-	if(command.name == Commands::kQuitCommand)
+	if(command.name == SharedCommands::kQuitCommand)
 	{
 		// save the state of the windows
 		receivedQuit = true;

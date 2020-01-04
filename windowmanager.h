@@ -8,13 +8,13 @@
 #include <vector>
 #include <map>
 #include "command.h"
-#include "../errorcodes.h"
-#include "../interfaces/iconfigserialisation.h"
+#include "errorcodes.h"
+#include "istateserialisation.h"
 
 class WindowBase;
-class Config;
+class StateSerialiser;
 
-class WindowManager : public ICommandProcessor, public IConfigSerialisation
+class WindowManager : public ICommandProcessor, public IStateSerialisation
 {
 public:
 	WindowManager();
@@ -24,14 +24,14 @@ public:
 	
 	const std::vector<std::string> GetWindows();
 	
-	void Init(Config* pConfig);
+	void Init(StateSerialiser* pStateSerialiser);
 	void Draw();
 	bool ReceivedQuit();
 
-	// IConfigSerialisation
+	// IStateSerialisation
 	virtual void SerialiseState(json& object);
 	virtual void DeserialiseState(json& object);
-	// ~IConfigSerialisation
+	// ~IStateSerialisation
 
 private:
 	
