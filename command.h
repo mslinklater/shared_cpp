@@ -26,7 +26,8 @@ public:
 	static CommandCenter* Instance();
 	void Update();
 	
-	void Broadcast(Command& command);
+	void QueueForBroadcast(Command& command);
+	void BroadcastNow(Command& command);
 	
 	void Subscribe(std::string commandName, ICommandProcessor* handler);
 	

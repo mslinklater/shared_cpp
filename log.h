@@ -55,6 +55,7 @@ public:
 	int GetLineCount();
 	const LogLine& GetLine(int number);
 	
+	void ResetCategories();
 	const std::set<std::string>& GetCategories();
 
 	bool GetCategoryEnabled(std::string category);

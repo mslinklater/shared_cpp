@@ -28,6 +28,22 @@ Log * Log::Instance()
 	return pInstance;
 }
 
+void Log::ResetCategories()
+{
+	// clear categories set
+	categories.clear();
+
+	// go through log lines and add cetagories to categories set
+	for(auto line : allLogLines)
+	{
+		if((line.category.length() > 0) && (categories.find(line.category) == categories.end()))
+		{
+			categories.insert(line.category);
+			categoryFilter[line.category] = true;
+		}
+	}
+}
+
 void Log::RecalculateDisplayedLines()
 {
 	filteredLogLines.clear();
