@@ -43,13 +43,13 @@ void CommandCenter::Update()
 
 void CommandCenter::QueueForBroadcast(Command& command)
 {
-	LOGINFOF("CommandCenter::QueueForBroadcast %s(%s,%s)", command.name.c_str(), command.payload.c_str(), command.payload2.c_str());
+//	LOGINFOF("CommandCenter::QueueForBroadcast %s(%s,%s)", command.name.c_str(), command.payload.c_str(), command.payload2.c_str());
 	commandList[writeQueueIndex].push(command);
 }
 
 void CommandCenter::BroadcastNow(Command& thisCommand)
 {
-	LOGINFOF("CommandCenter::BroadcastNow %s(%s,%s)", thisCommand.name.c_str(), thisCommand.payload.c_str(), thisCommand.payload2.c_str());
+//	LOGINFOF("CommandCenter::BroadcastNow %s(%s,%s)", thisCommand.name.c_str(), thisCommand.payload.c_str(), thisCommand.payload2.c_str());
 	if(dispatchMap.find(thisCommand.name) != dispatchMap.end())
 	{
 		std::vector<ICommandProcessor*> handlers = dispatchMap[thisCommand.name];
