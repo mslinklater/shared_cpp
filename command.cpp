@@ -6,6 +6,8 @@
 #include "command.h"
 #include "log.h"
 
+#define LOGGING 0
+
 CommandCenter* CommandCenter::pInstance = 0;
 
 CommandCenter::CommandCenter()
@@ -43,13 +45,17 @@ void CommandCenter::Update()
 
 void CommandCenter::QueueForBroadcast(Command& command)
 {
+#if LOGGING
 	LOGINFOF("CommandCenter::QueueForBroadcast %s(%s,%s)", command.name.c_str(), command.payload.c_str(), command.payload2.c_str());
+#endif
 	commandList[writeQueueIndex].push(command);
 }
 
 void CommandCenter::BroadcastNow(Command& thisCommand)
 {
+#if LOGGING
 	LOGINFOF("CommandCenter::BroadcastNow %s(%s,%s)", thisCommand.name.c_str(), thisCommand.payload.c_str(), thisCommand.payload2.c_str());
+#endif
 	if(dispatchMap.find(thisCommand.name) != dispatchMap.end())
 	{
 		std::vector<ICommandProcessor*> handlers = dispatchMap[thisCommand.name];
@@ -76,7 +82,9 @@ void CommandCenter::Subscribe(std::string commandName, ICommandProcessor* handle
 
 void SharedCommands::ToggleWindow(std::string windowName)
 {
+#if LOGGING
 	LOGINFOF("Commands::ToggleWindow %s", windowName.c_str());
+#endif
 	Command cmd;
 	cmd.name = kToggleWindowCommand;
 	cmd.payload = windowName;
@@ -85,7 +93,9 @@ void SharedCommands::ToggleWindow(std::string windowName)
 
 void SharedCommands::Quit(void)
 {
+#if LOGGING
 	LOGINFO("Commands::Quit");
+#endif
 	Command cmd;
 	cmd.name = kQuitCommand;
 	CommandCenter::Instance()->QueueForBroadcast(cmd);
