@@ -45,25 +45,17 @@ void CommandCenter::Update()
 
 void CommandCenter::QueueForBroadcast(Command& command)
 {
-<<<<<<< HEAD
 #if LOGGING
 	LOGINFOF("CommandCenter::QueueForBroadcast %s(%s,%s)", command.name.c_str(), command.payload.c_str(), command.payload2.c_str());
 #endif
-=======
-//	LOGINFOF("CommandCenter::QueueForBroadcast %s(%s,%s)", command.name.c_str(), command.payload.c_str(), command.payload2.c_str());
->>>>>>> e2b251f5ed66a49b7c279716060d7e7e142eb316
 	commandList[writeQueueIndex].push(command);
 }
 
 void CommandCenter::BroadcastNow(Command& thisCommand)
 {
-<<<<<<< HEAD
 #if LOGGING
 	LOGINFOF("CommandCenter::BroadcastNow %s(%s,%s)", thisCommand.name.c_str(), thisCommand.payload.c_str(), thisCommand.payload2.c_str());
 #endif
-=======
-//	LOGINFOF("CommandCenter::BroadcastNow %s(%s,%s)", thisCommand.name.c_str(), thisCommand.payload.c_str(), thisCommand.payload2.c_str());
->>>>>>> e2b251f5ed66a49b7c279716060d7e7e142eb316
 	if(dispatchMap.find(thisCommand.name) != dispatchMap.end())
 	{
 		std::vector<ICommandProcessor*> handlers = dispatchMap[thisCommand.name];
