@@ -44,7 +44,8 @@ void WindowManager::Draw()
 		bool active = windowActive[name];
 		if(active)
 		{
-			ImGui::Begin(name.c_str(), &active);
+			const char* thisWindow = name.c_str();
+			ImGui::Begin(thisWindow, &active);
 			WindowBase* pWindow = window.second;
 			pWindow->Draw();
 			ImGui::End();

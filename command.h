@@ -30,6 +30,7 @@ public:
 	void BroadcastNow(Command& command);
 	
 	void Subscribe(std::string commandName, ICommandProcessor* handler);
+	void Unsubscribe(std::string commandName, ICommandProcessor* handler);
 	
 private:
 	CommandCenter();

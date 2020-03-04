@@ -5,6 +5,7 @@
 
 #include "command.h"
 #include "log.h"
+#include <algorithm>
 
 #define LOGGING 0
 
@@ -77,7 +78,23 @@ CommandCenter * CommandCenter::Instance()
 
 void CommandCenter::Subscribe(std::string commandName, ICommandProcessor* handler)
 {
-	dispatchMap[commandName].push_back(handler);
+	std::vector<ICommandProcessor*>& vec = dispatchMap[commandName];
+
+	if(std::find(vec.begin(), vec.end(), handler) == vec.end())
+	{
+		vec.push_back(handler);
+	}
+}
+
+void CommandCenter::Unsubscribe(std::string commandName, ICommandProcessor* handler)
+{
+	std::vector<ICommandProcessor*>& vec = dispatchMap[commandName];
+
+//	if(dispatchMap[commandName].find(handler) != dispatchMap[commandName].end())
+	if(std::find(vec.begin(), vec.end(), handler) != vec.end())
+	{
+		vec.erase(handler);
+	}
 }
 
 void SharedCommands::ToggleWindow(std::string windowName)
