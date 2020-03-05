@@ -84,16 +84,26 @@ void CommandCenter::Subscribe(std::string commandName, ICommandProcessor* handle
 	{
 		vec.push_back(handler);
 	}
+	else
+	{
+		LOGERRORF("Subscribing to the same command twice:%s", commandName.c_str());
+	}
+	
 }
 
 void CommandCenter::Unsubscribe(std::string commandName, ICommandProcessor* handler)
 {
 	std::vector<ICommandProcessor*>& vec = dispatchMap[commandName];
 
-//	if(dispatchMap[commandName].find(handler) != dispatchMap[commandName].end())
-	if(std::find(vec.begin(), vec.end(), handler) != vec.end())
+	auto ret = std::find(vec.begin(), vec.end(), handler);
+
+	if(ret != vec.end())
 	{
-		vec.erase(handler);
+		vec.erase(ret);
+	}
+	else
+	{
+		LOGERRORF("Unsubscribing when not subscribed:%s", commandName.c_str());
 	}
 }
 
